@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "your-build-command", 
+    "build": "npm install && npm run build", 
     "start": "node server.js" 
   },
   "keywords": [],
