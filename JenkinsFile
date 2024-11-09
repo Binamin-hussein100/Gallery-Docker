@@ -36,6 +36,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying Application'
+                    sh 'curl -X POST https://api.render.com/deploys/rnd_9KZG6DR1UmXSLp8Bx6uciCKsOTuu'
                 }
             }
     }
