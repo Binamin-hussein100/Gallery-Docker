@@ -12,7 +12,10 @@ router.get('/', (req,res)=>{
     
     Image.find({}, function(err, images){
         // console.log(images)
-        if (err) console.log(err);
+        if (!images) {
+            console.log("No images found");
+            images = []; // Set it to an empty array to handle undefined case in EJS
+        }
         res.render('index',{images:images, msg: req.query.msg })
     })
 })
