@@ -3,7 +3,9 @@ pipeline {
 
     environment {
 
-        MONGO_URI_PRODUCTION = 'mongodb+srv://binaminhhassan14:xShANg8cs607Fq0M@cluster101.dao1p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster101'
+        production: "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        development: "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
+        test: "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
        
     }
 
