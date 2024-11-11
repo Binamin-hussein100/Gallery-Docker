@@ -10,7 +10,7 @@ RUN apt-get install -y nodejs
 
 USER jenkins
 
-RUN jenkins-plugin-cli --plugins "git docker pipeline nodejs"
+RUN jenkins-plugin-cli --verbose --plugins "git:latest docker:latest pipeline:latest nodejs:latest"
 
 EXPOSE 8080
 
