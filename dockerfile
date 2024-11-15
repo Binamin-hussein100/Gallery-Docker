@@ -1,19 +1,26 @@
 FROM jenkins/jenkins:lts
 
+# Switch to root user to install system dependencies
 USER root
 
-RUN apt-get update && apt-get install -y sudo git curl
+# Update package list and install essential dependencies
+RUN apt-get update && \
+    apt-get install -y sudo git curl && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs
 
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-
-
+# Switch back to the Jenkins user
 USER jenkins
 
-RUN jenkins-plugin-cli --verbose --plugins "git:5.6 docker:1.1.9 pipeline:2.6 nodejs:1.6.2"
+# Copy the plugins file and install plugins specified in plugins.txt
+RUN jenkins-plugin-cli --verbose --plugin "git docker pipeline nodejs"
 
+# Expose Jenkins port
 EXPOSE 8080
 
+# Set Jenkins environment variables
 ENV JENKINS_HOME /var/jenkins_home
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 
-CMD ["jenkins", "--httpPort=8080"]
+# Launch Jenkins with custom options (if necessary)
+CMD ["jenkins"]

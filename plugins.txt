@@ -1,0 +1,4 @@
+git:4.10.0
+docker:1.1.9
+pipeline:2.6
+nodejs:1.4.0
