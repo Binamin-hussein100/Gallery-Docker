@@ -49,7 +49,8 @@ pipeline {
             slackSend(
                 channel: '#devops',
                 color: 'good',
-                message: "Build ${currentBuild.fullDisplayName} completed successfully!"
+                message: "Build ${currentBuild.fullDisplayName} completed successfully!",
+                url:'https://github.com/Binamin-hussein100/Gallery-Docker'
             )
         }
         failure {
@@ -57,6 +58,11 @@ pipeline {
                 channel: '#devops',
                 color: 'bad',
                 message: "Build ${currentBuild.fullDisplayName} successful!"
+            )
+            emailext(
+                to: 'bin.amin@moringaschool.com',
+                subject: "Build Failed: ${currentBuild.fullDisplayName}",
+                body: "The build has failed. Please check the Jenkins console output for more details."
             )
         }
         always {
