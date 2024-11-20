@@ -46,10 +46,18 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline succeeded!'
+            slackSend(
+                channel: '#devops',
+                color: 'good',
+                message: "Build ${currentBuild.fullDisplayName} completed successfully!"
+            )
         }
         failure {
-            echo 'Pipeline failed. Check logs.'
+            slackSend(
+                channel: '#devops',
+                color: 'bad',
+                message: "Build ${currentBuild.fullDisplayName} successful!"
+            )
         }
         always {
             cleanWs() 
