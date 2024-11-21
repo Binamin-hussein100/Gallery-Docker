@@ -52,6 +52,18 @@ pipeline {
                 message: "Build ${currentBuild.fullDisplayName} completed successfully!",
                 url:'https://github.com/Binamin-hussein100/Gallery-Docker'
             )
+             emailext attachLog: true, 
+                body:
+                    """
+                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+                    <p>
+                    View console output at 
+                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+                    </p> 
+                      <p><i>(Build log is attached.)</i></p>
+                    """,
+                subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
+                to: 'bin.amin@moringaschool.com'
         }
         failure {
             slackSend(
@@ -59,11 +71,18 @@ pipeline {
                 color: 'bad',
                 message: "Build ${currentBuild.fullDisplayName} successful!"
             )
-            emailext(
-                to: 'bin.amin@moringaschool.com',
-                subject: "Build Failed: ${currentBuild.fullDisplayName}",
-                body: "The build has failed. Please check the Jenkins console output for more details."
-            )
+             emailext attachLog: true, 
+                body:
+                    """
+                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+                    <p>
+                    View console output at 
+                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+                    </p> 
+                      <p><i>(Build log is attached.)</i></p>
+                    """,
+                subject: "Status: FAILURE -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
+                to: 'bin.amin@moringaschool.com'
         }
         always {
             cleanWs() 
