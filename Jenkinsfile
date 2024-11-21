@@ -5,6 +5,30 @@ pipeline {
         PRODUCTION = "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         DEVELOPMENT = "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
         TEST = "mongodb+srv://binaminhhassan14:jfUdsYD1LHWwKNm5@cluster0.oaihr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+         EMAIL_BODY = 
+
+        """
+
+            <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+
+            <p>
+
+            View console output at 
+
+            "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+
+            </p> 
+
+            <p><i>(Build log is attached.)</i></p>
+
+        """
+
+        EMAIL_SUBJECT_SUCCESS = "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'" 
+
+        EMAIL_SUBJECT_FAILURE = "Status: 'FAILURE' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'" 
+
+        EMAIL_RECEPIENT = 'bin.amin@moringaschool.com'
     }
 
     stages {
@@ -53,17 +77,11 @@ pipeline {
                 
             )
              emailext attachLog: true, 
-                body:
-                    """
-                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
-                    <p>
-                    View console output at 
-                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
-                    </p> 
-                      <p><i>(Build log is attached.)</i></p>
-                    """,
-                subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
-                to: 'bin.amin@moringaschool.com'
+                body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_SUCCESS,
+
+                to: EMAIL_RECEPIENT
         }
         failure {
             slackSend(
@@ -72,17 +90,11 @@ pipeline {
                 message: "Build ${currentBuild.fullDisplayName} successful!"
             )
              emailext attachLog: true, 
-                body:
-                    """
-                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
-                    <p>
-                    View console output at 
-                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
-                    </p> 
-                      <p><i>(Build log is attached.)</i></p>
-                    """,
-                subject: "Status: FAILURE -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
-                to: 'bin.amin@moringaschool.com'
+                 body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_FAILURE, 
+
+                to: EMAIL_RECEPIENT
         }
         always {
             cleanWs() 
