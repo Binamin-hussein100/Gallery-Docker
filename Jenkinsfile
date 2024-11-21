@@ -49,8 +49,8 @@ pipeline {
             slackSend(
                 channel: '#devops',
                 color: 'good',
-                message: "Build ${currentBuild.fullDisplayName} completed successfully!",
-                url:'https://github.com/Binamin-hussein100/Gallery-Docker'
+                message: "Build ${currentBuild.fullDisplayName} completed successfully!  url:'https://github.com/Binamin-hussein100/Gallery-Docker'",
+                
             )
              emailext attachLog: true, 
                 body:
